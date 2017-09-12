@@ -1,0 +1,112 @@
+<!--
+Author: Doug Ayers
+Website: https://douglascayers.com
+GitHub: https://github.com/DouglasCAyers/sfdc-reloadable-flow-component
+License: BSD 3-Clause License
+-->
+<!--
+    Example using Winter '18 lightning:flow component and Lightning Data Service.
+    https://releasenotes.docs.salesforce.com/en-us/winter18/release-notes/rn_forcecom_flow_component.htm
+-->
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId">
+
+    <!-- Custom attributes -->
+
+    <aura:attribute name="flowName" type="String"
+                    description="API name of the Flow to display."/>
+
+    <!-- Standard attributes for Lightning Data Service -->
+
+    <aura:attribute name="recordId" type="String"
+                    description="The ID of the record to be displayed. Provided by force:hasRecordId interface."/>
+
+    <aura:attribute name="record" type="Object"
+                    description="The record object to be displayed. Managed by force:recordData component."/>
+
+    <aura:attribute name="simpleRecord" type="Object"
+                    description="A simplified view record object to be displayed. Managed by force:recordData component."/>
+
+    <aura:attribute name="recordError" type="String"
+                    description="An error message bound to force:recordData. Managed by force:recordData component."/>
+
+    <!-- we only use this for its `recordUpdated` event mechanism -->
+    <force:recordData aura:id="record"
+                      layoutType="FULL"
+                      recordId="{!v.recordId}"
+                      targetError="{!v.recordError}"
+                      targetRecord="{!v.record}"
+                      targetFields="{!v.simpleRecord}"
+                      recordUpdated="{!c.handleRecordUpdated}"
+                      mode="VIEW"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <!-- Markup -->
+
+    <lightning:card >
+
+        <aura:if isTrue="{!not(empty(v.recordError))}">
+
+            <div class="recordError">
+                <ui:message title="Error" severity="error" closable="true">
+                    {!v.recordError}
+                </ui:message>
+            </div>
+
+            <aura:set attribute="else">
+
+                <aura:if isTrue="{!not(empty(v.flowName))}">
+
+                    <!--<lightning:flow aura:id="flow" onstatuschange="{!c.handleFlowStatusChange}"/>-->
+                    <span aura:id="flowContainer"></span>
+
+                    <aura:set attribute="else">
+
+                        <div class="recordError">
+                            <ui:message title="Warning" severity="warning" closable="true">
+                                Please specify a Flow Name.
+                            </ui:message>
+                        </div>
+
+                    </aura:set>
+
+                </aura:if>
+
+            </aura:set>
+
+        </aura:if>
+
+    </lightning:card>
+
+</aura:component>
+<!--
+BSD 3-Clause License
+
+Copyright (c) 2017, Doug Ayers
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+* Neither the name of the copyright holder nor the names of its
+  contributors may be used to endorse or promote products derived from
+  this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
