@@ -61,7 +61,7 @@ License: BSD 3-Clause License
             // https://developer.salesforce.com/docs/atlas.en-us.210.0.lightning.meta/lightning/components_using_flow_inputs_set.htm
             var inputVariables = [
                 {
-                    name : 'accountId',
+                    name : 'recordId',
                     type : 'String',
                     value : component.get( 'v.recordId' )
                 }
