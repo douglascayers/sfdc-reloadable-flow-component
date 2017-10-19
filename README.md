@@ -43,7 +43,7 @@ Getting Started
 
 ![screen shot](images/appbuilder-custom-cmp.png)
 
-5. Configure the **Custom** component by specifying **Flow Name** (e.g. `Your_Awesome_Flow`).
+5. Configure the **Custom** component by specifying **Flow Name** (e.g. `Your_Awesome_Flow`). The Flow should have an input variable named `recordId` of type `text` that the component will pass to the Flow based on the record being viewed.
 
 ![screen shot](images/appbuilder-custom-cmp-attributes.png)
 
